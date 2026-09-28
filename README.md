@@ -1,6 +1,6 @@
 # 🐺🦇 SHADOW PACK 🕷️🐦‍⬛
 
-🎮 **Play the game:** [https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game](https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game)
+🎮 **Play the game:** [https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game]([https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game](https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/))
 
 ---
 
