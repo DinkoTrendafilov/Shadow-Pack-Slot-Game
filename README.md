@@ -1,6 +1,6 @@
 # 🐺🦇 SHADOW PACK 🕷️🐦‍⬛
 
-🎮 **Play the game:** [https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game]([https://github.com/DinkoTrendafilov/Shadow-Pack-Slot-Game](https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/))
+🎮 **Play the game:** [https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/](https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/)
 
 ---
 
@@ -214,9 +214,8 @@ The simulated RTP matches the theoretical value within **1 standard error** (SE 
 ## 🚀 How to Run
 
 ### Play the Game
-Open `index.html` in any modern browser — no installation required.
+Open `index.html` in any modern browser — no installation required. Or play online: [https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/](https://dinkotrendafilov.github.io/Shadow-Pack-Slot-Game/)
 
-Enter the number of spins and select a bet. The engine will output theoretical analysis, simulation results, survival analysis, and financial breakdown.
 🧠 Technical Highlights
 
     Multinomial distribution for exact theoretical probabilities
