@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🐺🦇 SHADOW PACK 🕷️🐦‍⬛</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}body{background:#0a0816;color:#f0ece4;font-family:'Segoe UI',sans-serif;display:flex;justify-content:center;min-height:100vh;padding:20px;user-select:none;-webkit-user-select:none;overflow-x:hidden}.container{background:linear-gradient(145deg,#1a1530,#0f0b1e);padding:24px 20px;border-radius:30px;border:2px solid #3a2a5a;box-shadow:0 0 80px rgba(106,63,138,.3);max-width:780px;width:100%;text-align:center;position:relative}h1{font-size:28px;color:#c084e0;letter-spacing:2px}.sub{color:#8a7aa8;font-size:13px;margin-bottom:12px}
+
+    .hud{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:14px;padding:8px;border-radius:14px;background:linear-gradient(145deg,#0f172a,#1e1b4b);border:1px solid #1e3a8a;box-shadow:0 0 30px rgba(59,130,246,.2),inset 0 0 20px rgba(15,23,42,.8);position:relative;overflow:hidden}
+    .hud::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(59,130,246,.08),transparent 60%),radial-gradient(circle at 80% 70%,rgba(239,68,68,.06),transparent 60%);pointer-events:none;animation:cosmicDrift 8s ease-in-out infinite alternate}
+    @keyframes cosmicDrift{0%{opacity:.6}100%{opacity:1}}
+    .hud-item{background:linear-gradient(145deg,#0a1020,#0f172a);border:1px solid #1e3a8a;border-radius:10px;padding:8px 5px;position:relative;transition:all .3s;z-index:1}
+    .hud-item:hover{border-color:#3b82f6;box-shadow:0 0 15px rgba(59,130,246,.3)}
+    .hud-item .label{font-size:9px;color:#60a5fa;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+    .hud-item .value{font-size:15px;font-weight:900;margin-top:2px;color:#ffffff}
+    .hud-item .value.green{color:#4ade80}
+    .hud-item .value.red{color:#ef4444}
+    .hud-item .value.blue{color:#60a5fa}
+    .hud-item .value.rtp-green{color:#4ade80}
+    .hud-item .value.rtp-yellow{color:#fbbf24}
+    .hud-item .value.rtp-red{color:#ef4444}
+    .hud-item .value.pl{color:#c084fc}
+    .hud-item .value.gold{color:#ffd700}
+
+    .reels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:#050410;border-radius:12px;padding:8px;border:1px solid #1a1428;margin:12px 0;position:relative}
+    .reel{background:#0c0918;border-radius:8px;overflow:hidden;height:300px;border:1px solid #1e1830;position:relative}
+    .reel-strip{display:flex;flex-direction:column;will-change:transform;transition:transform 0s}
+    .cell{height:75px;display:flex;align-items:center;justify-content:center;font-size:38px}
+    .cell.dim{opacity:.3}
+    .cell.lit{animation:pulse .8s ease-in-out infinite;position:relative;z-index:5}
+    @keyframes pulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 6px #fbbf24)}50%{transform:scale(1.15);filter:drop-shadow(0 0 18px #fbbf24)}}
+    .reel::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 18%,transparent 82%,rgba(0,0,0,.55));pointer-events:none;z-index:6}
+    .reel::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(192,132,224,.15);pointer-events:none;z-index:6}
+
+    .status{font-size:16px;min-height:32px;margin:6px 0 10px;color:#fbbf24}
+    .status.big{font-size:22px;font-weight:bold;animation:flicker 1s ease-in-out infinite alternate}
+    @keyframes flicker{from{opacity:.7}to{opacity:1}}
+
+    .controls{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:12px 0}
+    .controls button{border:none;border-radius:10px;padding:10px 2px;font-weight:bold;font-size:11px;cursor:pointer;transition:transform .06s}
+    .controls button:active{transform:translateY(3px)}
+    .controls button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+    .btn-spin{background:linear-gradient(180deg,#fbbf24,#d97706);color:#0a0710;box-shadow:0 4px 0 #92400e}
+    .btn-auto{background:linear-gradient(180deg,#7c3aed,#4c1d95);color:#fff;box-shadow:0 4px 0 #2d1a70}
+    .btn-stop{background:linear-gradient(180deg,#9b1c2e,#5c0e1a);color:#fff;box-shadow:0 4px 0 #3a0810}
+    .btn-mute{background:#1e1830;color:#f0ece4;box-shadow:0 4px 0 #0a0814}
+    .btn-save{background:#1e1830;color:#60a5fa;box-shadow:0 4px 0 #0a0814;border:1px solid #3a2a5a}
+    .btn-new{background:#5c0e1a;color:#fff;box-shadow:0 4px 0 #3a0810;border:1px solid #7a1a2a}
+    .btn-export{background:#1e1830;color:#4ade80;box-shadow:0 4px 0 #0a0814;border:1px solid #3a2a5a}
+    .btn-import{background:#1e1830;color:#22d3ee;box-shadow:0 4px 0 #0a0814;border:1px solid #3a2a5a}
+    .btn-gamble{background:#1e1830;color:#ffd700;box-shadow:0 4px 0 #0a0814;border:2px solid #3a2a5a;transition:all .3s}
+    .btn-gamble.active{background:linear-gradient(145deg,#fbbf24,#d97706);color:#0a0710;border-color:#ffd700;box-shadow:0 4px 0 #92400e,0 0 30px rgba(251,191,36,.4);animation:gamblePulse 1.2s ease-in-out infinite}
+    @keyframes gamblePulse{0%,100%{box-shadow:0 4px 0 #92400e,0 0 20px rgba(251,191,36,.3)}50%{box-shadow:0 4px 0 #92400e,0 0 50px rgba(251,191,36,.7)}}
+
+    .bet-row{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:8px 0}
+    .bet-row button{background:#181528;border:1px solid #2a2240;color:#f0ece4;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:12px}
+    .bet-row button.active{background:#7c3aed;border-color:#4c1d95}
+    .bet-row .label{color:#6b6480;font-size:13px;padding:4px 6px}
+
+    /* ============================================================ */
+    /* NEW WIN DISPLAY (Variant A — horizontal)                     */
+    /* ============================================================ */
+    .win-display{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      z-index:30;
+      pointer-events:none;
+      opacity:0;
+      text-align:center;
+      padding:24px 40px;
+      border-radius:24px;
+      background:rgba(10,8,22,.92);
+      border:3px solid rgba(251,191,36,.6);
+      box-shadow:0 0 60px rgba(251,191,36,.5),0 0 120px rgba(192,132,224,.3);
+      backdrop-filter:blur(8px);
+      min-width:340px;
+    }
+    .win-display.active{animation:winDisplayPop 2.0s ease-out forwards}
+    @keyframes winDisplayPop{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(0.4)}
+      12%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}
+      22%{transform:translate(-50%,-50%) scale(1)}
+      80%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:0;transform:translate(-50%,-60%) scale(0.95)}
+    }
+    .win-display.mega{border-color:rgba(255,93,143,.8);box-shadow:0 0 80px rgba(255,93,143,.7),0 0 160px rgba(192,132,224,.5)}
+    .win-display .win-equation{
+      font-size:34px;
+      font-weight:900;
+      color:#fbbf24;
+      text-shadow:0 0 20px rgba(251,191,36,.8),0 0 40px rgba(251,191,36,.4);
+      letter-spacing:2px;
+      line-height:1.2;
+      margin-bottom:8px;
+      white-space:nowrap;
+    }
+    .win-display .win-equation .sym{color:#fff;text-shadow:0 0 20px rgba(255,255,255,.5)}
+    .win-display .win-equation .op{color:#c084e0;margin:0 6px;font-size:28px}
+    .win-display .win-equation .sum{color:#4ade80;text-shadow:0 0 20px rgba(74,222,128,.8)}
+    .win-display .win-amount{
+      font-size:46px;
+      font-weight:900;
+      color:#4ade80;
+      text-shadow:0 0 30px rgba(74,222,128,.9),0 0 60px rgba(74,222,128,.4);
+      letter-spacing:2px;
+      line-height:1.1;
+      margin-top:4px;
+    }
+    .win-display .win-amount .label{
+      display:block;
+      font-size:16px;
+      color:#c084e0;
+      letter-spacing:6px;
+      margin-bottom:2px;
+      font-weight:700;
+    }
+    .win-display.mega .win-equation{font-size:40px;color:#ff5d8f;text-shadow:0 0 30px rgba(255,93,143,.9)}
+    .win-display.mega .win-equation .sym{color:#fff}
+    .win-display.mega .win-equation .sum{color:#ff5d8f;text-shadow:0 0 30px rgba(255,93,143,.9)}
+    .win-display.mega .win-amount{font-size:56px;color:#ff5d8f;text-shadow:0 0 40px rgba(255,93,143,.9);animation:megaPulse 1s ease-in-out infinite}
+    @keyframes megaPulse{0%,100%{opacity:.9}50%{opacity:1}}
+
+    .container.q-shake{animation:qshk .38s cubic-bezier(.36,.07,.19,.97)}
+    @keyframes qshk{10%,90%{transform:translate3d(-1px,0,0)}20%,80%{transform:translate3d(2px,0,0)}30%,50%,70%{transform:translate3d(-4px,0,0)}40%,60%{transform:translate3d(4px,0,0)}}
+    .container.q-glow{box-shadow:0 0 40px rgba(251,191,36,.55),0 0 120px rgba(192,132,224,.5),0 0 80px rgba(106,63,138,.3)!important}
+    .container.q-bigwin{animation:qbw 1.2s ease-in-out!important}
+    @keyframes qbw{0%{box-shadow:0 0 0 rgba(251,191,36,0)}20%{box-shadow:0 0 80px rgba(251,191,36,.8),0 0 160px rgba(251,191,36,.4);transform:scale(1.02)}40%{box-shadow:0 0 40px rgba(251,191,36,.6),0 0 120px rgba(74,222,128,.3);transform:scale(.98)}60%{box-shadow:0 0 80px rgba(251,191,36,.7),0 0 200px rgba(192,132,224,.3);transform:scale(1.01)}100%{box-shadow:0 0 40px rgba(251,191,36,.3),0 0 80px rgba(106,63,138,.2);transform:scale(1)}}
+    .btn-spin.q-pulse{animation:qbp 1.1s ease-in-out infinite}
+    @keyframes qbp{0%,100%{box-shadow:0 4px 0 #92400e,0 0 0 rgba(251,191,36,0)}50%{box-shadow:0 4px 0 #92400e,0 0 22px rgba(251,191,36,.7)}}
+
+
+    /* ===== GAMBLE in HUD ===== */
+    .hud-item.hud-gamble{display:flex;flex-direction:column;justify-content:space-between;padding:6px 5px}
+    .hud-gamble .btn-gamble{width:100%;margin-top:3px;border-radius:8px;padding:5px 2px;font-weight:800;font-size:11px;line-height:1.2;cursor:pointer;min-height:36px}
+    .hud-gamble .btn-gamble small{display:block;font-size:10px;font-weight:700;opacity:.9}
+    .hud-gamble .btn-gamble:not(.active){box-shadow:0 3px 0 #0a0814}
+    .hud-gamble .btn-gamble:disabled{opacity:.35;cursor:not-allowed}
+    .hud-gamble .btn-gamble:not(:disabled):active{transform:translateY(2px)}
+    .g-timer{height:4px;border-radius:2px;background:#1e1830;margin-top:5px;overflow:hidden;opacity:0;transition:opacity .15s}
+    .g-timer.on{opacity:1}
+    .g-timer i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#fbbf24,#f97316);transform-origin:left center}
+
+    /* ===== WIN TIERS ===== */
+    .win-display .win-tier{display:none;font-size:22px;font-weight:900;letter-spacing:6px;margin-bottom:8px;color:#fbbf24;text-shadow:0 0 18px rgba(251,191,36,.9)}
+    .win-display.t3 .win-tier,.win-display.t4 .win-tier,.win-display.t5 .win-tier,.win-display.t6 .win-tier{display:block}
+    .win-display.t3.active,.win-display.t4.active,.win-display.t5.active,.win-display.t6.active{animation:winDisplayPopBig 4s ease-out forwards}
+    @keyframes winDisplayPopBig{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(0.3)}
+      5%{opacity:1;transform:translate(-50%,-50%) scale(1.18)}
+      8%{transform:translate(-50%,-50%) scale(1)}
+      92%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:0;transform:translate(-50%,-60%) scale(0.95)}
+    }
+    .win-display.t3{border-color:#fbbf24}
+    .win-display.t4{border-color:rgba(255,93,143,.9);box-shadow:0 0 80px rgba(255,93,143,.7),0 0 160px rgba(192,132,224,.5)}
+    .win-display.t4 .win-tier,.win-display.t4 .win-amount{color:#ff5d8f;text-shadow:0 0 30px rgba(255,93,143,.9)}
+    .win-display.t5{border-color:#22d3ee;box-shadow:0 0 90px rgba(34,211,238,.7),0 0 180px rgba(124,58,237,.6)}
+    .win-display.t5 .win-tier,.win-display.t5 .win-amount{color:#22d3ee;text-shadow:0 0 30px rgba(34,211,238,.9)}
+    .win-display.t6{border-color:#ffd700;box-shadow:0 0 110px rgba(255,215,0,.9),0 0 220px rgba(255,93,143,.6);background:rgba(30,16,4,.94)}
+    .win-display.t6 .win-tier{font-size:28px;color:#ffd700;text-shadow:0 0 30px rgba(255,215,0,1);animation:megaPulse .6s ease-in-out infinite}
+    .win-display.t6 .win-amount{color:#ffd700;text-shadow:0 0 40px rgba(255,215,0,1)}
+    .win-display.t4 .win-amount,.win-display.t5 .win-amount,.win-display.t6 .win-amount{font-size:56px}
+    #fxc{position:fixed;inset:0;z-index:250;pointer-events:none}
+
+    #qbg{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+    @media(max-width:600px){
+      .hud{grid-template-columns:repeat(3,1fr);gap:5px}
+      .hud-item{padding:6px 4px}
+      .hud-item .label{font-size:8px;letter-spacing:.5px}
+      .hud-item .value{font-size:13px}
+      .controls{grid-template-columns:repeat(3,1fr)}
+      .container{padding:12px}
+      h1{font-size:22px}
+      .win-display{padding:18px 24px;min-width:280px}
+      .win-display .win-equation{font-size:24px}
+      .win-display .win-equation .op{font-size:20px;margin:0 4px}
+      .win-display .win-amount{font-size:32px}
+      .win-display .win-amount .label{font-size:12px;letter-spacing:4px}
+      .win-display.mega .win-equation{font-size:28px}
+      .win-display.mega .win-amount{font-size:40px}
+      .win-display .win-tier{font-size:16px;letter-spacing:4px}
+      .win-display.t4 .win-amount,.win-display.t5 .win-amount,.win-display.t6 .win-amount{font-size:40px}
+      .hud-gamble .btn-gamble{font-size:10px}
+    }
+
+    .gamble-overlay{position:fixed;inset:0;z-index:300;display:none;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);justify-content:center;align-items:center;flex-direction:column;padding:20px;animation:fsFade .4s ease-out}
+    .gamble-overlay.active{display:flex}
+    @keyframes fsFade{0%{opacity:0;transform:scale(0.8)}100%{opacity:1;transform:scale(1)}}
+    .gamble-box{background:linear-gradient(145deg,#1a1040,#0f0b1e);border-radius:30px;padding:30px 40px;max-width:520px;width:100%;border:3px solid #fbbf24;box-shadow:0 0 80px rgba(251,191,36,.3);text-align:center;position:relative}
+    .gamble-box .g-title{font-size:28px;font-weight:900;color:#fbbf24;letter-spacing:2px}
+    .gamble-box .g-win{font-size:20px;color:#fff;margin:6px 0 12px}
+    .gamble-box .g-win span{color:#fbbf24;font-weight:900;font-size:28px}
+    .gamble-box .g-options{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px;margin:12px 0}
+    .gamble-box .g-options button{padding:8px 4px;border-radius:10px;border:2px solid #3a2a5a;background:#0c0918;color:#f0ece4;font-weight:bold;font-size:12px;cursor:pointer;transition:all .2s}
+    .gamble-box .g-options button:hover{background:#1a1040;border-color:#a855f7;transform:scale(1.03)}
+    .gamble-box .g-options button.g-selected{background:#7c3aed;border-color:#fbbf24;box-shadow:0 0 30px rgba(124,58,237,.4)}
+    .gamble-box .g-number-pick{display:flex;gap:6px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+    .gamble-box .g-number-pick button{width:44px;height:44px;border-radius:50%;border:2px solid #3a2a5a;background:#0c0918;color:#f0ece4;font-weight:bold;font-size:20px;cursor:pointer;transition:all .2s}
+    .gamble-box .g-number-pick button:hover{background:#1a1040;border-color:#a855f7;transform:scale(1.08)}
+    .gamble-box .g-number-pick button.g-num-selected{background:#7c3aed;border-color:#fbbf24;box-shadow:0 0 30px rgba(124,58,237,.4)}
+    .gamble-box .g-dice-area{display:flex;justify-content:center;align-items:center;margin:10px 0}
+    .gamble-box .g-dice{font-size:80px;width:100px;height:100px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#1a1040,#0c0918);border-radius:16px;border:3px solid #fbbf24;box-shadow:0 0 40px rgba(251,191,36,.2);transition:all .3s}
+    .gamble-box .g-dice.rolling{animation:diceRoll 0.6s ease-in-out}
+    @keyframes diceRoll{0%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.3) rotate(90deg)}50%{transform:scale(0.8) rotate(180deg)}75%{transform:scale(1.2) rotate(270deg)}100%{transform:scale(1) rotate(360deg)}}
+    .gamble-box .g-dice.win{box-shadow:0 0 60px rgba(74,222,128,.6);border-color:#4ade80}
+    .gamble-box .g-dice.lose{box-shadow:0 0 60px rgba(248,113,113,.6);border-color:#f87171}
+    .gamble-box .g-result{font-size:18px;font-weight:bold;margin:8px 0;min-height:36px}
+    .gamble-box .g-result.win{color:#4ade80}
+    .gamble-box .g-result.lose{color:#f87171}
+    .gamble-box .g-controls{display:flex;gap:10px;justify-content:center;margin:12px 0}
+    .gamble-box .g-controls button{padding:10px 24px;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer;transition:all .2s;border:none}
+    .gamble-box .g-btn-spin{background:linear-gradient(145deg,#fbbf24,#d97706);color:#0a0710;box-shadow:0 4px 0 #92400e}
+    .gamble-box .g-btn-take{background:linear-gradient(145deg,#4ade80,#22c55e);color:#0a0710;box-shadow:0 4px 0 #166534}
+    .gamble-box .g-btn-close{background:#5c0e1a;color:#fff;box-shadow:0 4px 0 #3a0810}
+    .gamble-box .g-attempts{font-size:14px;color:#8a7aa8;margin:4px 0}
+    .gamble-box .g-attempts span{color:#fbbf24;font-weight:bold}
+    .gamble-stats{font-size:14px;color:#8a7aa8;margin:4px 0;border-top:1px solid #2a2240;padding-top:8px}
+    .gamble-stats .stat-row{display:flex;justify-content:space-between;padding:2px 0}
+    .gamble-stats .stat-label{color:#6b6480}
+    .gamble-stats .stat-value{color:#f0ece4;font-weight:bold}
+    .gamble-stats .stat-value.win{color:#4ade80}
+    .gamble-stats .stat-value.loss{color:#f87171}
+    .gamble-box .g-number-hint{font-size:13px;color:#c084e0;margin:4px 0 2px;font-weight:bold}
+    .gamble-box .g-number-hint span{color:#fbbf24}
+  </style>
+</head>
+<body>
+<canvas id="qbg"></canvas>
+<canvas id="fxc"></canvas>
+<div class="container">
+<h1>🐺🦇 SHADOW PACK 🕷️🐦‍⬛</h1>
+<div class="sub">4 symbols · Top-2 sum · RTP ~96%</div>
+
+<div class="hud">
+  <div class="hud-item"><div class="label">Credits</div><div class="value green" id="h1">200,000.00</div></div>
+  <div class="hud-item"><div class="label">Bet</div><div class="value pl" id="h2">1</div></div>
+  <div class="hud-item"><div class="label">Spins</div><div class="value gold" id="h5">0/100</div></div>
+  <div class="hud-item"><div class="label">Cycles</div><div class="value gold" id="h6">0</div></div>
+  <div class="hud-item hud-gamble"><button class="btn-gamble" id="gb" disabled>🎲 GAMBLE</button><div class="g-timer" id="gTimer"><i id="gTimerBar"></i></div></div>
+  <div class="hud-item"><div class="label">Session RTP</div><div class="value" id="sessionRtp">0.00%</div></div>
+</div>
+
+<div class="reels" id="r0">
+  <div class="win-display" id="wp">
+    <div class="win-tier" id="wt"></div>
+    <div class="win-equation" id="we">🐺 × 7 <span class="op">+</span> 🦇 × 6 <span class="op">=</span> <span class="sum">13</span></div>
+    <div class="win-amount" id="wa"><span class="label">WIN</span>+0.00</div>
+  </div>
+</div>
+<div class="status" id="st">Welcome. Press SPIN to start.</div>
+<div class="bet-row" id="br"><span class="label">Bet:</span></div>
+<div class="controls">
+  <button class="btn-mute" id="mu">🔊 Sound</button>
+  <button class="btn-spin" id="sp">SPIN</button>
+  <button class="btn-auto" id="au">AUTO</button>
+  <button class="btn-stop" id="stp" disabled>STOP</button>
+  <button class="btn-save" id="saveBtn">💾 Save</button>
+  <button class="btn-export" id="expBtn">📤 Export</button>
+  <button class="btn-import" id="impBtn">📥 Import</button>
+  <button class="btn-new" id="newBtn">🔄 New</button>
+</div>
+<input type="file" id="impFile" accept=".json,application/json" style="display:none">
+</div>
+
+<div class="gamble-overlay" id="gambleOverlay">
+  <div class="gamble-box">
+    <div class="g-title">🎲 GAMBLE</div>
+    <div class="g-win">Current Win: <span id="gWinAmount">0.00</span></div>
+    <div class="g-attempts">Attempts: <span id="gAttempts">0</span></div>
+    <div class="gamble-stats" id="gambleStats">
+      <div class="stat-row"><span class="stat-label">Sessions:</span><span class="stat-value" id="gSessions">0</span></div>
+      <div class="stat-row"><span class="stat-label">Total Win:</span><span class="stat-value win" id="gTotalWin">0.00</span></div>
+      <div class="stat-row"><span class="stat-label">Total Loss:</span><span class="stat-value loss" id="gTotalLoss">0.00</span></div>
+    </div>
+    <div class="g-options">
+      <button class="g-opt" data-bet="small">🔵 SMALL<br><small>1,2,3</small></button>
+      <button class="g-opt" data-bet="big">🔴 BIG<br><small>4,5,6</small></button>
+      <button class="g-opt" data-bet="even">🟢 EVEN<br><small>2,4,6</small></button>
+      <button class="g-opt" data-bet="odd">🟡 ODD<br><small>1,3,5</small></button>
+      <button class="g-opt" data-bet="number">🟣 PICK NUMBERS<br><small>1→×6 · 2→×3 · 3→×2</small></button>
+    </div>
+    <div class="g-number-hint" id="gNumberHint" style="display:none">Pick <span id="gPickCount">0</span> number(s) → <span id="gPickMult">×0</span></div>
+    <div class="g-number-pick" id="gNumberPick" style="display:none">
+      <button data-num="1">1</button><button data-num="2">2</button><button data-num="3">3</button>
+      <button data-num="4">4</button><button data-num="5">5</button><button data-num="6">6</button>
+    </div>
+    <div class="g-dice-area">
+      <div class="g-dice" id="gDice">🎲</div>
+    </div>
+    <div class="g-result" id="gResult"></div>
+    <div class="g-controls">
+      <button class="g-btn-spin" id="gSpinBtn">🎲 SPIN DICE</button>
+      <button class="g-btn-take" id="gTakeBtn">💰 TAKE WIN</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function secureRandom() {
+    var array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    var cryptoVal = array[0] / 4294967296;
+    var mathVal = Math.random();
+    return (cryptoVal + mathVal) % 1;
+  }
+  function secureRandomInt(min, max) { return Math.floor(secureRandom() * (max - min)) + min; }
+
+  // ============ 4 SYMBOLS + WEIGHTS ============
+  var SYM = ['🐺', '🐦‍⬛', '🦇', '🕷️'];
+  var WEIGHTS = [5, 5, 5, 5];
+
+  var reels = [];
+  for (var r = 0; r < 5; r++) {
+    var reel = [];
+    for (var i = 0; i < WEIGHTS.length; i++) {
+      for (var w = 0; w < WEIGHTS[i]; w++) reel.push(SYM[i]);
+    }
+    reels.push(reel);
+  }
+  function randomSymbolFromReel(reelIndex) { return reels[reelIndex][secureRandomInt(0, reels[reelIndex].length)]; }
+
+  function fmt(num) { return Number(num).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+  function fmtInt(num) { return Number(num).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}); }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var _ = function(sel){ return document.querySelectorAll(sel); };
+  var $$ = function(tag){ return document.createElement(tag); };
+  var ___ = function(p,c){ p.appendChild(c); };
+  var ____ = function(el, txt){ el.textContent = txt; };
+  var _____ = function(el, html){ el.innerHTML = html; };
+
+  // ============ PAYTABLE (Top-2 sum) ============
+  var PAYTABLE = {
+    10: 12,
+    14: 1,
+    15: 2.5,
+    16: 7,
+    17: 20,
+    18: 60,
+    19: 342,
+    20: 1000
+  };
+
+  var balance = 200000;
+  var bet = 1;
+  var spinCount = 0;
+  var cycleCount = 0;
+  var lowBalanceWarned = false;
+  var isMegaWinShowing = false;
+  var pendingGambleWin = 0;
+  var sessionTotalBet = 0;
+  var sessionTotalWon = 0;
+  var lossStreak = 0;
+
+  var gambleActive = false;
+  var gambleWin = 0;
+  var gambleAttempts = 0;
+  var gambleBetType = null;
+  var gambleNumbers = [];
+  var gambleDiceResult = null;
+  var gambleOriginalBet = 0;
+  var gambleSessions = 0;
+  var gambleTotalWin = 0;
+  var gambleTotalLoss = 0;
+
+  var PICK_MULTIPLIERS = {1: 6, 2: 3, 3: 2, 4: 1.5, 5: 1.2, 6: 1};
+
+  function getPickMultiplier(count) {
+    return PICK_MULTIPLIERS[count] || 1;
+  }
+
+  function updateSessionRTP() {
+    var el = document.getElementById('sessionRtp');
+    if (!el) return;
+    el.className = 'value';
+    if (sessionTotalBet === 0) { ____(el, '0.00%'); el.classList.add('rtp-yellow'); return; }
+    var rtp = (sessionTotalWon / sessionTotalBet) * 100;
+    ____(el, rtp.toFixed(2) + '%');
+    if (rtp >= 100) el.classList.add('rtp-green');
+    else if (rtp >= 90) el.classList.add('rtp-yellow');
+    else el.classList.add('rtp-red');
+  }
+
+  // ============================================================
+  // SAVE / LOAD / EXPORT / IMPORT
+  // ============================================================
+  function saveGame() {
+    try {
+      var data = {balance, bet, spinCount, cycleCount, gambleSessions, gambleTotalWin, gambleTotalLoss, sessionTotalBet, sessionTotalWon, timestamp: Date.now()};
+      localStorage.setItem('shadowPackSave', JSON.stringify(data));
+      localStorage.setItem('shadowPackBackup', JSON.stringify(data));
+    } catch(e) {}
+  }
+  function loadGame() {
+    try {
+      var raw = localStorage.getItem('shadowPackSave') || localStorage.getItem('shadowPackBackup');
+      if (!raw) return false;
+      var data = JSON.parse(raw);
+      balance = data.balance || 200000; bet = data.bet || 1;
+      spinCount = data.spinCount || 0; cycleCount = data.cycleCount || 0;
+      sessionTotalBet = data.sessionTotalBet || 0;
+      sessionTotalWon = data.sessionTotalWon || 0;
+      gambleSessions = data.gambleSessions || 0; gambleTotalWin = data.gambleTotalWin || 0; gambleTotalLoss = data.gambleTotalLoss || 0;
+      var btns = _('#br button');
+      for(var i=0;i<btns.length;i++) { btns[i].classList.remove('active'); if(parseFloat(btns[i].textContent) === bet) btns[i].classList.add('active'); }
+      updateHUD(); resetReels();
+      setStatus('✅ Game restored! Balance: ' + fmt(balance), false);
+      return true;
+    } catch(e) { return false; }
+  }
+  function updateGambleStatsDisplay() {
+    var s=$('gSessions'), w=$('gTotalWin'), l=$('gTotalLoss');
+    if(s) ____(s, gambleSessions); if(w) ____(w, fmt(gambleTotalWin)); if(l) ____(l, fmt(gambleTotalLoss));
+  }
+
+  function exportGame() {
+    try {
+      var data = {balance, bet, spinCount, cycleCount, gambleSessions, gambleTotalWin, gambleTotalLoss, sessionTotalBet, sessionTotalWon, exportDate: new Date().toISOString(), gameVersion: 'shadow_pack_v1'};
+      var json = JSON.stringify(data, null, 2);
+      var blob = new Blob([json], {type: 'application/json'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      var d = new Date();
+      var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
+      var filename = 'shadow_pack_save_' + d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + '_' + pad(d.getHours()) + '-' + pad(d.getMinutes()) + '.json';
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setStatus('📤 Exported: ' + filename, false);
+      setTimeout(function(){ setStatus('Ready.', false); }, 2500);
+    } catch(e) {
+      setStatus('⚠️ Export failed: ' + e.message, false);
+    }
+  }
+
+  function importGame(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        if (typeof data.balance !== 'number') throw new Error('Invalid save file');
+        if (!confirm('⚠️ Import will REPLACE current progress!\n\nNew balance: ' + fmt(data.balance) + '\n\nContinue?')) {
+          setStatus('Import cancelled.', false);
+          return;
+        }
+        balance = data.balance || 200000;
+        bet = data.bet || 1;
+        spinCount = data.spinCount || 0;
+        cycleCount = data.cycleCount || 0;
+        sessionTotalBet = data.sessionTotalBet || 0;
+        sessionTotalWon = data.sessionTotalWon || 0;
+        gambleSessions = data.gambleSessions || 0;
+        gambleTotalWin = data.gambleTotalWin || 0;
+        gambleTotalLoss = data.gambleTotalLoss || 0;
+        var btns = _('#br button');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.remove('active');
+          if (parseFloat(btns[i].textContent) === bet) btns[i].classList.add('active');
+        }
+        updateHUD();
+        resetReels();
+        saveGame();
+        setStatus('📥 Imported! Balance: ' + fmt(balance), false);
+        setTimeout(function(){ setStatus('Ready.', false); }, 2500);
+      } catch(err) {
+        setStatus('⚠️ Import failed: ' + err.message, false);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function newGameWithConfirm() {
+    if (gambleActive) { setStatus('⚠️ Complete Gamble first!', false); return; }
+    if (isMegaWinShowing) { setStatus('⚠️ Complete Mega Win first!', false); return; }
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.8);display:flex;justify-content:center;align-items:center;backdrop-filter:blur(6px);';
+    var box = document.createElement('div');
+    box.style.cssText = 'background:linear-gradient(145deg,#1a1040,#0f0b1e);padding:30px 40px;border-radius:24px;border:3px solid #fbbf24;text-align:center;max-width:400px;width:90%;box-shadow:0 0 60px rgba(251,191,36,.3);';
+    box.innerHTML = '<div style="font-size:28px;font-weight:900;color:#fbbf24;margin-bottom:12px;">🔄 NEW GAME</div><div style="color:#c084e0;font-size:18px;margin-bottom:20px;">Are you sure? All progress will be lost.</div><div style="display:flex;gap:16px;justify-content:center;"><button id="newYes" style="background:linear-gradient(145deg,#fbbf24,#d97706);color:#0a0710;padding:10px 28px;border:none;border-radius:40px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 4px 0 #92400e;">✅ YES</button><button id="newNo" style="background:#1e1830;color:#fff;padding:10px 28px;border:none;border-radius:40px;font-size:18px;font-weight:bold;cursor:pointer;border:2px solid #3a2a5a;">❌ NO</button></div>';
+    overlay.appendChild(box); document.body.appendChild(overlay);
+    function removeOverlay() { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }
+    document.getElementById('newYes').addEventListener('click', function() { removeOverlay(); performNewGameReset(); });
+    document.getElementById('newNo').addEventListener('click', function() { removeOverlay(); setStatus('Game continues.', false); });
+  }
+
+  function performNewGameReset() {
+    isAuto = false; autoId++;
+    gambleActive = false; gambleWin = 0; gambleAttempts = 0; gambleBetType = null; gambleNumbers = []; gambleDiceResult = null;
+    pendingGambleWin = 0; gambleOriginalBet = 0; gambleSessions = 0; gambleTotalWin = 0; gambleTotalLoss = 0;
+    if (typeof gambleOverlay !== 'undefined' && gambleOverlay) gambleOverlay.classList.remove('active');
+    if (typeof winDisplay !== 'undefined' && winDisplay) winDisplay.classList.remove('active');
+    if (typeof gambleBtn !== 'undefined' && gambleBtn) { resetGambleBtn(); }
+    try { localStorage.removeItem('shadowPackSave'); localStorage.removeItem('shadowPackBackup'); } catch(e) {}
+    balance = 200000; bet = 1; spinCount = 0; cycleCount = 0; lossStreak = 0;
+    sessionTotalBet = 0; sessionTotalWon = 0;
+    var btns = _('#br button');
+    for(var i=0;i<btns.length;i++) { btns[i].classList.remove('active'); if(parseFloat(btns[i].textContent) === bet) btns[i].classList.add('active'); }
+    if (typeof autoBtn !== 'undefined' && autoBtn) autoBtn.disabled = false;
+    if (typeof stopBtn !== 'undefined' && stopBtn) stopBtn.disabled = true;
+    if (typeof spinBtn !== 'undefined' && spinBtn) spinBtn.disabled = false;
+    isSpinning = false;
+    resetReels(); updateHUD(); saveGame();
+    setStatus('🔄 New game started!', false);
+  }
+
+  var newBtn = document.getElementById('newBtn');
+  if (newBtn) {
+    newBtn.addEventListener('click', function(e) { e.preventDefault(); playUIClick(); newGameWithConfirm(); });
+  }
+
+  var reelsContainer = $('r0');
+  var statusEl = $('st');
+  var h1 = $('h1'), h2 = $('h2'), h5 = $('h5'), h6 = $('h6');
+  var spinBtn = $('sp'), autoBtn = $('au'), stopBtn = $('stp'), muteBtn = $('mu');
+  var gambleBtn = $('gb');
+  var winDisplay = $('wp');
+  var winEquation = $('we');
+  var winAmount = $('wa');
+  var betRow = $('br');
+  var saveBtn = $('saveBtn');
+  var expBtn = $('expBtn');
+  var impBtn = $('impBtn');
+  var impFile = $('impFile');
+  var gambleOverlay = $('gambleOverlay');
+  var gWinAmount = $('gWinAmount');
+  var gAttempts = $('gAttempts');
+  var gDice = $('gDice');
+  var gResult = $('gResult');
+  var gSpinBtn = $('gSpinBtn');
+  var gTakeBtn = $('gTakeBtn');
+  var gNumberPick = $('gNumberPick');
+  var gNumberHint = $('gNumberHint');
+  var gPickCount = $('gPickCount');
+  var gPickMult = $('gPickMult');
+  var gOpts = document.querySelectorAll('.g-opt');
+
+  var strips = [];
+  for(var i=0;i<5;i++){
+    var reelEl = $$('div'); reelEl.className = 'reel';
+    var strip = $$('div'); strip.className = 'reel-strip';
+    ___(reelEl, strip); ___(reelsContainer, reelEl); strips.push(strip);
+  }
+
+  function updateHUD(){
+    ____(h1, fmt(balance)); ____(h2, bet);
+    ____(h5, spinCount + '/100'); ____(h6, cycleCount);
+    updateGambleStatsDisplay();
+    updateSessionRTP();
+    if(balance < bet * 5){ if(!lowBalanceWarned){ lowBalanceWarned = true; playLowBalanceWarning(); } }
+    else lowBalanceWarned = false;
+  }
+  function setStatus(text, big){ ____(statusEl, text); statusEl.className = 'status' + (big ? ' big' : ''); }
+
+  function renderReel(index, symbols){
+    var strip = strips[index];
+    strip.style.transition = 'none'; strip.style.transform = 'translateY(0)'; _____(strip, '');
+    symbols.forEach(function(sym){ var cell = $$('div'); cell.className = 'cell'; ____(cell, sym); ___(strip, cell); });
+  }
+  function resetReels(){
+    for(var i=0;i<5;i++){ var syms = []; for(var r=0;r<4;r++) syms.push(randomSymbolFromReel(i)); renderReel(i, syms); }
+  }
+  function getMatrix(){
+    var matrix = [];
+    for(var r=0; r<4; r++){ var row = []; for(var c=0; c<5; c++) row.push(randomSymbolFromReel(c)); matrix.push(row); }
+    return matrix;
+  }
+
+  // ============================================================
+  // SHOW WIN — Variant A (horizontal equation)
+  // ============================================================
+  var winShowId = 0;
+  function showWinDisplay(topSymbols, topCounts, top2Sum, winAmountVal, holdMs, tier){
+    if(!winDisplay || winAmountVal <= 0) return;
+    if (typeof winAmountVal !== 'number' || isNaN(winAmountVal)) winAmountVal = 0;
+    tier = tier || 0;
+    var myId = ++winShowId;
+
+    var html = '';
+    for (var i = 0; i < topSymbols.length; i++){
+      if (i > 0) html += ' <span class="op">+</span> ';
+      html += '<span class="sym">' + topSymbols[i] + '</span> × ' + topCounts[i];
+    }
+    html += ' <span class="op">=</span> <span class="sum">' + top2Sum + '</span>';
+    _____(winEquation, html);
+    var wt = $('wt'); if (wt) ____(wt, TIER_NAMES[tier] || '');
+
+    if (tier >= 3){
+      var dur = Math.min(2200, holdMs * 0.5), st = performance.now();
+      (function step(now){
+        if (myId !== winShowId) return;
+        var p = Math.min(1, (now - st) / dur), e = 1 - Math.pow(1 - p, 3);
+        _____(winAmount, '<span class="label">WIN</span>+' + fmt(winAmountVal * e));
+        if (p < 1) requestAnimationFrame(step);
+      })(st);
+    } else {
+      _____(winAmount, '<span class="label">WIN</span>+' + fmt(winAmountVal));
+    }
+
+    winDisplay.className = 'win-display' + (tier >= 3 ? ' t' + tier : '');
+    winDisplay.style.animationDuration = (holdMs || 2000) + 'ms';
+    void winDisplay.offsetWidth;
+    winDisplay.classList.add('active');
+
+    setTimeout(function(){ if (myId === winShowId) winDisplay.classList.remove('active'); }, holdMs || 2000);
+  }
+
+  var megaWinMusicActive = false;
+  var megaWinMusicInterval = null;
+  function playMegaWinMelody() {
+    if (!soundEnabled || !audioCtx) return;
+    if (megaWinMusicActive) return;
+    megaWinMusicActive = true;
+    duckBgMusic(0.2, 30000, 1000);
+    function playMegaPhrase() {
+      if (!megaWinMusicActive || !soundEnabled || !audioCtx) return;
+      playNoise(0.8, 0.22, 0, 'lowpass', 8500, 0.7);
+      var notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00];
+      notes.forEach(function(f, i){ playTone(f, 0.22, 'triangle', 0.20, i * 0.09, 3800); });
+      var tail = notes.length * 0.09 + 0.25;
+      setTimeout(function(){
+        playChord([1046.50, 1318.51, 1567.98, 2093.00], 0, 2.0, 'sawtooth', 0.22, 0.028);
+        playTone(2637.02, 1.9, 'sine', 0.13, 0.06);
+        playTone(3135.96, 1.9, 'triangle', 0.09, 0.10);
+      }, tail * 1000);
+    }
+    playMegaPhrase();
+    megaWinMusicInterval = setInterval(function() { if (!megaWinMusicActive) { clearInterval(megaWinMusicInterval); return; } playMegaPhrase(); }, 5200);
+  }
+  function stopMegaWinMusic() {
+    megaWinMusicActive = false;
+    if (megaWinMusicInterval) { clearInterval(megaWinMusicInterval); megaWinMusicInterval = null; }
+    restoreBgMusicAfterCelebration();
+  }
+
+  // ============================================================
+  // AUDIO
+  // ============================================================
+  var audioCtx = null, soundEnabled = true, bgGain = null, sfxGain = null, bgBaseLevel = 0.34;
+  function initAudio(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      sfxGain = audioCtx.createGain(); sfxGain.gain.value = 1;
+      var sfxComp = audioCtx.createDynamicsCompressor(); sfxComp.threshold.value = -14; sfxComp.knee.value = 12; sfxComp.ratio.value = 6; sfxComp.attack.value = 0.003; sfxComp.release.value = 0.22;
+      sfxGain.connect(sfxComp); sfxComp.connect(audioCtx.destination);
+      bgGain = audioCtx.createGain(); bgGain.gain.value = soundEnabled ? bgBaseLevel : 0; bgGain.connect(audioCtx.destination);
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    if(!bgMusicState.running) startBgMusic();
+  }
+  function playTone(freq, duration, type, volume, delay, filterFreq){
+    if(!soundEnabled || !audioCtx) return;
+    var now = audioCtx.currentTime + (delay || 0);
+    var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain();
+    osc.type = type || 'sine'; osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(volume || 0.12, now + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+    if(filterFreq){ var filt = audioCtx.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = filterFreq; osc.connect(filt); filt.connect(gain); } else osc.connect(gain);
+    gain.connect(sfxGain || audioCtx.destination); osc.start(now); osc.stop(now + duration + 0.03);
+  }
+  function playNoise(duration, volume, delay, filterType, filterFreq, q){
+    if(!soundEnabled || !audioCtx) return;
+    var now = audioCtx.currentTime + (delay || 0);
+    var size = Math.max(1, Math.floor(audioCtx.sampleRate * duration));
+    var buffer = audioCtx.createBuffer(1, size, audioCtx.sampleRate);
+    var data = buffer.getChannelData(0);
+    for(var i=0;i<size;i++){ data[i] = (secureRandom()*2-1) * (1 - i/size); }
+    var src = audioCtx.createBufferSource(); src.buffer = buffer;
+    var filt = audioCtx.createBiquadFilter(); filt.type = filterType || 'highpass'; filt.frequency.value = filterFreq || 6000;
+    if(q) filt.Q.value = q;
+    var gain = audioCtx.createGain(); gain.gain.setValueAtTime(volume || 0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+    src.connect(filt); filt.connect(gain); gain.connect(sfxGain || audioCtx.destination);
+    src.start(now); src.stop(now + duration + 0.02);
+  }
+  function playChord(freqs, delay, duration, type, volume, arpGap){ freqs.forEach(function(f, i){ playTone(f, duration, type || 'sawtooth', volume || 0.1, (delay||0) + i * (arpGap||0), 2400); }); }
+  function duckBgMusic(amount, holdMs, releaseMs){
+    if(!bgGain || !audioCtx) return;
+    var now = audioCtx.currentTime; var base = soundEnabled ? bgBaseLevel : 0;
+    bgGain.gain.cancelScheduledValues(now); bgGain.gain.setValueAtTime(bgGain.gain.value, now);
+    bgGain.gain.linearRampToValueAtTime(base * amount, now + 0.15);
+    bgGain.gain.setValueAtTime(base * amount, now + (holdMs||0)/1000);
+    bgGain.gain.linearRampToValueAtTime(base, now + (holdMs||0)/1000 + (releaseMs||800)/1000);
+  }
+  function restoreBgMusicAfterCelebration(){
+    if(!bgGain || !audioCtx) return;
+    var now = audioCtx.currentTime; bgGain.gain.cancelScheduledValues(now); bgGain.gain.setValueAtTime(bgGain.gain.value, now);
+    bgGain.gain.linearRampToValueAtTime(soundEnabled ? bgBaseLevel : 0, now + 0.8);
+  }
+  function playReelStopSound(col){ playNoise(0.05, 0.12, 0, 'bandpass', 1500 + col*180, 6); playTone(160 + col*14, 0.07, 'square', 0.04, 0.01); }
+  function playWinSound(){ [523, 659, 784, 1046].forEach(function(f,i){ playTone(f, 0.18, 'triangle', 0.13, i*0.06, 3000); }); }
+  function playTriumphantMelody() {
+    if (!soundEnabled || !audioCtx) return;
+    duckBgMusic(0.35, 4600, 900); playNoise(1.1, 0.22, 0, 'lowpass', 9000, 0.7);
+    playChord([523.25, 659.25, 783.99], 0.00, 0.5, 'sawtooth', 0.12, 0.02);
+    playChord([587.33, 739.99, 880.00], 0.32, 0.5, 'sawtooth', 0.12, 0.02);
+    playChord([659.25, 830.61, 987.77], 0.64, 0.5, 'sawtooth', 0.13, 0.02);
+    playChord([880.00, 1108.73, 1318.51], 0.96, 1.9, 'sawtooth', 0.16, 0.03);
+    playTone(1760, 1.6, 'triangle', 0.09, 1.0); playTone(2217, 1.6, 'sine', 0.06, 1.05);
+  }
+  function playUIClick(){ playNoise(0.035, 0.09, 0, 'bandpass', 2200, 3); playTone(700, 0.05, 'square', 0.045, 0.005); }
+  function setAutoAmbience(active){
+    bgBaseLevel = active ? 0.20 : 0.34;
+    if(!bgGain || !audioCtx) return;
+    var now = audioCtx.currentTime; bgGain.gain.cancelScheduledValues(now); bgGain.gain.setValueAtTime(bgGain.gain.value, now);
+    bgGain.gain.linearRampToValueAtTime(soundEnabled ? bgBaseLevel : 0, now + 0.4);
+  }
+  function playBatScreech(){
+    if(!soundEnabled || !audioCtx) return;
+    var now = audioCtx.currentTime; var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(2400, now); osc.frequency.exponentialRampToValueAtTime(5200, now + 0.08); osc.frequency.exponentialRampToValueAtTime(1800, now + 0.22);
+    gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(0.06, now + 0.02); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+    osc.connect(gain); gain.connect(sfxGain || audioCtx.destination); osc.start(now); osc.stop(now + 0.3);
+    playNoise(0.2, 0.03, 0.02, 'highpass', 5000, 2);
+  }
+  function playWolfHowl(){
+    if(!soundEnabled || !audioCtx) return;
+    var now = audioCtx.currentTime; var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain(); var filt = audioCtx.createBiquadFilter();
+    filt.type = 'lowpass'; filt.frequency.value = 1200; osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now); osc.frequency.linearRampToValueAtTime(340, now + 0.5); osc.frequency.linearRampToValueAtTime(220, now + 1.3); osc.frequency.linearRampToValueAtTime(140, now + 1.8);
+    gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(0.05, now + 0.3); gain.gain.linearRampToValueAtTime(0.04, now + 1.2); gain.gain.exponentialRampToValueAtTime(0.001, now + 1.9);
+    osc.connect(filt); filt.connect(gain); gain.connect(sfxGain || audioCtx.destination); osc.start(now); osc.stop(now + 2.0);
+  }
+  function playAmbientStinger(){ if(secureRandom() < 0.5) playBatScreech(); else playWolfHowl(); }
+  function playLowBalanceWarning(){
+    if(!soundEnabled || !audioCtx) return;
+    [220, 207, 220, 196].forEach(function(f, i){ playTone(f, 0.16, 'square', 0.07, i * 0.14, 900); });
+    playNoise(0.3, 0.06, 0.02, 'bandpass', 500, 4);
+  }
+
+  var bgMusicState = { running:false, step:0, loopCount:0, nextTime:0, timerId:null, bpm:134 };
+  var BG_BASS = [110,110,110,130.81,110,110,146.83,110,87.31,87.31,87.31,110,87.31,87.31,98,87.31,130.81,130.81,130.81,164.81,130.81,130.81,146.83,130.81,98,98,98,123.47,98,98,110,98];
+  var BG_LEAD = [440,0,523.25,0,659.25,523.25,440,0,349.23,0,440,0,523.25,440,349.23,0,523.25,0,659.25,0,783.99,659.25,523.25,0,392,0,493.88,0,587.33,493.88,392,0];
+
+  function bgStepDuration(){ return 60 / bgMusicState.bpm / 2; }
+  function bgScheduleBass(freq, time, dur){ playToneRaw(freq, time, dur * 1.05, 'sawtooth', 0.11, 480, bgGain); }
+  function bgScheduleLead(freq, time, dur, accent){ playToneRaw(freq, time, dur * 0.85, 'triangle', accent ? 0.09 : 0.065, 3400, bgGain); }
+  function bgScheduleKick(time){
+    if(!audioCtx) return;
+    var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(150, time); osc.frequency.exponentialRampToValueAtTime(46, time + 0.16);
+    gain.gain.setValueAtTime(0.55, time); gain.gain.exponentialRampToValueAtTime(0.001, time + 0.19);
+    osc.connect(gain); gain.connect(bgGain); osc.start(time); osc.stop(time + 0.2);
+  }
+  function bgScheduleSnare(time){
+    if(!audioCtx) return;
+    var size = Math.floor(audioCtx.sampleRate * 0.14);
+    var buffer = audioCtx.createBuffer(1, size, audioCtx.sampleRate);
+    var data = buffer.getChannelData(0);
+    for(var i=0;i<size;i++) data[i] = secureRandom()*2-1;
+    var src = audioCtx.createBufferSource(); src.buffer = buffer;
+    var filt = audioCtx.createBiquadFilter(); filt.type='bandpass'; filt.frequency.value=1900; filt.Q.value=1.2;
+    var gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.22, time); gain.gain.exponentialRampToValueAtTime(0.001, time + 0.14);
+    src.connect(filt); filt.connect(gain); gain.connect(bgGain); src.start(time); src.stop(time + 0.15);
+  }
+  function bgScheduleHat(time, accent){
+    if(!audioCtx) return;
+    var size = Math.floor(audioCtx.sampleRate * 0.045);
+    var buffer = audioCtx.createBuffer(1, size, audioCtx.sampleRate);
+    var data = buffer.getChannelData(0);
+    for(var i=0;i<size;i++) data[i] = secureRandom()*2-1;
+    var src = audioCtx.createBufferSource(); src.buffer = buffer;
+    var filt = audioCtx.createBiquadFilter(); filt.type='highpass'; filt.frequency.value=7500;
+    var gain = audioCtx.createGain(); gain.gain.setValueAtTime(accent ? 0.10 : 0.055, time); gain.gain.exponentialRampToValueAtTime(0.001, time + 0.045);
+    src.connect(filt); filt.connect(gain); gain.connect(bgGain); src.start(time); src.stop(time + 0.05);
+  }
+  function playToneRaw(freq, time, duration, type, volume, filterFreq, bus){
+    if(!audioCtx || !bus) return;
+    var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, time);
+    gain.gain.setValueAtTime(0, time); gain.gain.linearRampToValueAtTime(volume, time + 0.015); gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+    var filt = audioCtx.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = filterFreq;
+    osc.connect(filt); filt.connect(gain); gain.connect(bus); osc.start(time); osc.stop(time + duration + 0.03);
+  }
+  function bgScheduler(){
+    if(!audioCtx) return;
+    while(bgMusicState.nextTime < audioCtx.currentTime + 0.15){
+      var i = bgMusicState.step % 32; var t = bgMusicState.nextTime;
+      var beatInBar = i % 8; var bar = Math.floor(i / 8); var dur = bgStepDuration();
+      bgScheduleBass(BG_BASS[i], t, dur);
+      if(BG_LEAD[i]) bgScheduleLead(BG_LEAD[i], t, dur, bar === 2 || bar === 3);
+      if(beatInBar === 0 || beatInBar === 4) bgScheduleKick(t);
+      if(beatInBar === 2 || beatInBar === 6) bgScheduleSnare(t);
+      bgScheduleHat(t, beatInBar % 4 === 0);
+      bgMusicState.step++;
+      if(bgMusicState.step % 32 === 0) bgMusicState.loopCount++;
+      bgMusicState.nextTime += dur;
+    }
+  }
+  function startBgMusic(){ if(bgMusicState.running || !audioCtx || !bgGain) return; bgMusicState.running = true; bgMusicState.step = 0; bgMusicState.loopCount = 0; bgMusicState.nextTime = audioCtx.currentTime + 0.05; bgMusicState.timerId = setInterval(bgScheduler, 25); }
+
+
+  // ============================================================
+  // WIN TIERS + SOUNDS + FANFARES + CONFETTI + GAMBLE WINDOW
+  // ============================================================
+  var GAMBLE_WINDOW_MS = 2500;          // time to press GAMBLE after the win display hides (AUTO mode)
+  var TIER_NAMES = ['', '', '', 'BIG WIN', 'MEGA WIN', 'SUPER MEGA WIN', '👑 JACKPOT 👑'];
+  var TIER_HOLD  = [2000, 2000, 2200, 3000, 4200, 6000, 8500];
+  function getWinTier(mult){
+    if (mult < 2) return 0;      // 1x
+    if (mult < 5) return 1;      // 2.5x
+    if (mult < 15) return 2;     // 7x, 12x
+    if (mult < 40) return 3;     // 20x   BIG
+    if (mult < 200) return 4;    // 60x   MEGA
+    if (mult < 600) return 5;    // 342x  SUPER MEGA
+    return 6;                    // 1000x JACKPOT
+  }
+
+  // ----- reverb bus for fanfares -----
+  var fxBus = null;
+  function ensureFx(){
+    if (fxBus || !audioCtx) return;
+    fxBus = audioCtx.createGain(); fxBus.gain.value = 1; fxBus.connect(sfxGain);
+    var conv = audioCtx.createConvolver();
+    var len = Math.floor(audioCtx.sampleRate * 1.8);
+    var buf = audioCtx.createBuffer(2, len, audioCtx.sampleRate);
+    for (var ch = 0; ch < 2; ch++){ var d = buf.getChannelData(ch); for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+    conv.buffer = buf;
+    var wet = audioCtx.createGain(); wet.gain.value = 0.26;
+    fxBus.connect(conv); conv.connect(wet); wet.connect(sfxGain);
+  }
+
+  // ----- instruments -----
+  function brassNote(freq, t0, dur, vol){
+    if (!soundEnabled || !audioCtx) return;
+    var t = audioCtx.currentTime + t0;
+    var g = audioCtx.createGain(), f = audioCtx.createBiquadFilter();
+    f.type = 'lowpass'; f.Q.value = 2;
+    f.frequency.setValueAtTime(500, t); f.frequency.linearRampToValueAtTime(3400, t + 0.07); f.frequency.exponentialRampToValueAtTime(1500, t + dur);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + 0.03);
+    g.gain.setValueAtTime(vol * 0.85, t + Math.max(0.05, dur - 0.12)); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+    [-7, 0, 7].forEach(function(det){
+      var o = audioCtx.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(freq, t); o.detune.value = det;
+      o.connect(f); o.start(t); o.stop(t + dur + 0.05);
+    });
+    f.connect(g); g.connect(fxBus || sfxGain);
+  }
+  function padNote(freq, t0, dur, vol){
+    if (!soundEnabled || !audioCtx) return;
+    var t = audioCtx.currentTime + t0;
+    var g = audioCtx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + 0.35); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+    [['triangle', 0], ['triangle', 9], ['sine', 1200]].forEach(function(x){
+      var o = audioCtx.createOscillator(); o.type = x[0]; o.frequency.setValueAtTime(x[1] === 1200 ? freq * 2 : freq, t); if (x[1] !== 1200) o.detune.value = x[1];
+      o.connect(g); o.start(t); o.stop(t + dur + 0.05);
+    });
+    g.connect(fxBus || sfxGain);
+  }
+  function bellNote(freq, t0, dur, vol){
+    playTone(freq, dur, 'sine', vol, t0);
+    playTone(freq * 2.76, dur * 0.55, 'sine', vol * 0.35, t0);
+    playTone(freq * 5.4, dur * 0.25, 'sine', vol * 0.14, t0);
+  }
+  function coinPing(t0, vol){
+    var f = 1800 + secureRandom() * 2200;
+    playTone(f, 0.09, 'square', vol * 0.45, t0, 6000);
+    playTone(f * 1.5, 0.16, 'sine', vol, t0 + 0.03);
+  }
+  function coinShower(t0, n, span, vol){ for (var i = 0; i < n; i++) coinPing(t0 + secureRandom() * span, vol); }
+  function drumRoll(t0, dur, vol){
+    var n = Math.floor(dur / 0.045);
+    for (var i = 0; i < n; i++) playNoise(0.06, vol * (0.35 + 0.65 * i / n), t0 + i * 0.045, 'bandpass', 1800, 1.2);
+  }
+  function timpani(t0, vol, f){
+    if (!soundEnabled || !audioCtx) return;
+    var t = audioCtx.currentTime + t0, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(f * 1.8, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.12);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.75);
+    o.connect(g); g.connect(sfxGain); o.start(t); o.stop(t + 0.8);
+    playNoise(0.08, vol * 0.4, t0, 'lowpass', 900, 1);
+  }
+  function cymbalCrash(t0, vol, dur){
+    playNoise(dur, vol, t0, 'highpass', 5500, 0.6);
+    playNoise(dur * 0.6, vol * 0.6, t0, 'bandpass', 9000, 0.8);
+  }
+
+  // ----- one brass fanfare phrase (ratio = transposition). returns its length in seconds -----
+  function fanfarePhrase(t0, ratio, full, finalDur, vol){
+    var CM = [261.63, 329.63, 392.00, 523.25], FM = [349.23, 440.00, 523.25, 698.46],
+        GM = [392.00, 493.88, 587.33, 783.99], CH = [523.25, 659.25, 783.99, 1046.50];
+    function ch(t, notes, dur, v){
+      notes.forEach(function(f){ brassNote(f * ratio, t0 + t, dur, v); });
+      brassNote(notes[0] / 2 * ratio, t0 + t, dur, v * 1.1);
+    }
+    var finalT;
+    if (full){
+      ch(0.00, CM, 0.15, vol); ch(0.19, CM, 0.15, vol); ch(0.38, CM, 0.15, vol);
+      ch(0.57, FM, 0.50, vol); ch(1.12, GM, 0.22, vol);
+      finalT = 1.40;
+    } else {
+      ch(0.00, CM, 0.13, vol); ch(0.17, CM, 0.13, vol); ch(0.34, FM, 0.16, vol);
+      finalT = 0.55;
+    }
+    ch(finalT, CH, finalDur, vol * 1.15);
+    if (finalDur > 1.5) CH.forEach(function(f){ padNote(f * ratio, t0 + finalT, finalDur, 0.028); });
+    cymbalCrash(t0 + finalT, 0.20, Math.min(finalDur, 2.2));
+    [1046.50, 1318.51, 1567.98, 2093.00, 2637.02].forEach(function(f, i){ bellNote(f * ratio, t0 + finalT + 0.05 + i * 0.07, 0.6, 0.05); });
+    return finalT + finalDur;
+  }
+
+  function playWinTier(tier){
+    if (!soundEnabled || !audioCtx) return;
+    ensureFx();
+    var i;
+    switch (tier){
+      case 0:  // 1x - soft coin ping
+        bellNote(1568, 0, 0.28, 0.09); bellNote(2093, 0.09, 0.40, 0.09);
+        break;
+      case 1:  // small win - bright arpeggio + a few coins
+        [523.25, 659.25, 783.99, 1046.50].forEach(function(f, k){ playTone(f, 0.20, 'triangle', 0.12, k * 0.07, 3500); bellNote(f * 2, k * 0.07, 0.35, 0.035); });
+        coinShower(0.30, 4, 0.40, 0.05);
+        break;
+      case 2:  // nice win - long arpeggio, soft brass chord, coins
+        [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00].forEach(function(f, k){ playTone(f, 0.22, 'triangle', 0.12, k * 0.075, 3800); });
+        [523.25, 659.25, 783.99].forEach(function(f){ brassNote(f, 0.55, 0.9, 0.02); });
+        bellNote(2093, 0.55, 0.9, 0.06); bellNote(2637, 0.62, 0.9, 0.04);
+        coinShower(0.45, 9, 0.9, 0.05);
+        break;
+      case 3:  // BIG WIN - short fanfare
+        duckBgMusic(0.2, 2900, 900);
+        fanfarePhrase(0, 1, false, 1.5, 0.038);
+        timpani(0.55, 0.35, 98);
+        coinShower(0.40, 16, 1.8, 0.055);
+        break;
+      case 4:  // MEGA WIN - drum roll + full fanfare
+        duckBgMusic(0.15, 4300, 900);
+        drumRoll(0, 0.70, 0.16); timpani(0.62, 0.5, 98);
+        fanfarePhrase(0.70, 1, true, 2.0, 0.040);
+        coinShower(0.90, 30, 3.0, 0.055);
+        break;
+      case 5:  // SUPER MEGA - two phrases (modulates up)
+        duckBgMusic(0.12, 6200, 1000);
+        drumRoll(0, 1.0, 0.18); timpani(0.95, 0.55, 98);
+        fanfarePhrase(1.00, 1, true, 0.40, 0.040);
+        timpani(2.75, 0.55, 110);
+        fanfarePhrase(2.80, 1.1225, true, 2.4, 0.042);
+        coinShower(1.2, 46, 4.6, 0.055);
+        break;
+      case 6:  // JACKPOT - three phrases rising + huge finale
+        duckBgMusic(0.10, 8800, 1200);
+        drumRoll(0, 1.4, 0.20); timpani(1.35, 0.6, 98);
+        fanfarePhrase(1.40, 1, true, 0.35, 0.040);
+        timpani(3.10, 0.6, 110);
+        fanfarePhrase(3.15, 1.1225, true, 0.35, 0.042);
+        timpani(4.85, 0.6, 123);
+        fanfarePhrase(4.90, 1.2599, true, 3.0, 0.045);
+        [0, 0.25, 0.5].forEach(function(d){ timpani(4.90 + 1.40 + d, 0.5, 123); });
+        coinShower(1.6, 70, 7.2, 0.055);
+        break;
+    }
+  }
+
+  function playDiceRattle(){
+    for (var k = 0; k < 9; k++){
+      playNoise(0.035, 0.09, k * 0.07, 'bandpass', 1800 + (k % 3) * 500, 5);
+      playTone(300 + (k % 4) * 90, 0.04, 'square', 0.03, k * 0.07, 1500);
+    }
+    playNoise(0.08, 0.10, 0.63, 'bandpass', 900, 3);
+  }
+
+  // ----- confetti / coin fountain -----
+  var fxCanvas = $('fxc'), fxCtx = fxCanvas ? fxCanvas.getContext('2d') : null, fxParts = [], fxRunning = false;
+  function fxResize(){ if (!fxCanvas) return; fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight; }
+  fxResize(); window.addEventListener('resize', fxResize);
+  var FX_COLORS = ['#fbbf24', '#f472b6', '#4ade80', '#60a5fa', '#c084fc', '#f87171', '#fde047'];
+  function burstEffect(tier){
+    if (!fxCtx || tier < 3) return;
+    var n = {3: 70, 4: 140, 5: 230, 6: 380}[tier];
+    var W = window.innerWidth, H = window.innerHeight;
+    for (var i = 0; i < n; i++){
+      var side = i % 3, coin = secureRandom() < 0.45, p;
+      if (side === 2 && tier >= 4){          // rain from the top
+        p = {x: secureRandom() * W, y: -20 - secureRandom() * 200, vx: (secureRandom() - .5) * 2, vy: 2 + secureRandom() * 3, g: 0.05};
+      } else {                                // cannons from bottom corners
+        var left = side === 0;
+        p = {x: left ? W * 0.08 : W * 0.92, y: H + 10, vx: (left ? 1 : -1) * (2 + secureRandom() * 7), vy: -(11 + secureRandom() * 13), g: 0.33};
+      }
+      p.delay = Math.floor(secureRandom() * (tier * 14)); p.coin = coin; p.a = secureRandom() * 6.28; p.va = (secureRandom() - .5) * 0.4;
+      p.size = coin ? 8 + secureRandom() * 6 : 6 + secureRandom() * 6; p.color = coin ? '#fbbf24' : FX_COLORS[Math.floor(secureRandom() * FX_COLORS.length)];
+      fxParts.push(p);
+    }
+    if (!fxRunning){ fxRunning = true; requestAnimationFrame(fxLoop); }
+  }
+  function fxLoop(){
+    fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    for (var i = fxParts.length - 1; i >= 0; i--){
+      var p = fxParts[i];
+      if (p.delay > 0){ p.delay--; continue; }
+      p.x += p.vx; p.y += p.vy; p.vy += p.g; p.vx *= 0.995; p.a += p.va;
+      if (p.y > fxCanvas.height + 30 && p.vy > 0){ fxParts.splice(i, 1); continue; }
+      fxCtx.save(); fxCtx.translate(p.x, p.y); fxCtx.fillStyle = p.color;
+      if (p.coin){
+        fxCtx.scale(Math.abs(Math.cos(p.a)) * 0.9 + 0.1, 1);
+        fxCtx.beginPath(); fxCtx.arc(0, 0, p.size / 2, 0, 6.283); fxCtx.fill();
+        fxCtx.strokeStyle = '#b45309'; fxCtx.lineWidth = 1.5; fxCtx.stroke();
+      } else { fxCtx.rotate(p.a); fxCtx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2); }
+      fxCtx.restore();
+    }
+    if (fxParts.length) requestAnimationFrame(fxLoop);
+    else { fxRunning = false; fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height); }
+  }
+
+  // ----- GAMBLE button (HUD) + 2.5s window -----
+  var gTimerWrap = $('gTimer'), gTimerBar = $('gTimerBar');
+  function startGambleTimer(ms){
+    if (!gTimerWrap) return;
+    gTimerWrap.classList.add('on'); gTimerBar.style.transition = 'none'; gTimerBar.style.transform = 'scaleX(1)';
+    void gTimerBar.offsetWidth;
+    gTimerBar.style.transition = 'transform ' + ms + 'ms linear'; gTimerBar.style.transform = 'scaleX(0)';
+  }
+  function stopGambleTimer(){
+    if (!gTimerWrap) return;
+    gTimerWrap.classList.remove('on'); gTimerBar.style.transition = 'none'; gTimerBar.style.transform = 'scaleX(1)';
+  }
+  function resetGambleBtn(){
+    stopGambleTimer();
+    gambleBtn.disabled = true; gambleBtn.classList.remove('active'); _____(gambleBtn, '🎲 GAMBLE');
+  }
+  function armGambleBtn(amount){
+    pendingGambleWin = amount;
+    gambleBtn.disabled = false; gambleBtn.classList.add('active');
+    _____(gambleBtn, '🎲 GAMBLE<small>' + fmt(amount) + '</small>');
+  }
+  // Waits up to `ms` for the player to open the gamble. Resolves early if the gamble opens or AUTO is stopped.
+  function gambleWindow(ms){
+    return new Promise(function(resolve){
+      var end = Date.now() + ms; startGambleTimer(ms);
+      (function tick(){
+        if (gambleActive || !isAuto || Date.now() >= end){ resolve(); return; }
+        setTimeout(tick, 40);
+      })();
+    });
+  }
+
+  // ============================================================
+  // GAMBLE
+  // ============================================================
+  var diceEmojis = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+
+  function updatePickHint() {
+    if (!gNumberHint) return;
+    var n = gambleNumbers.length;
+    if (n === 0) { gNumberHint.style.display = 'none'; return; }
+    gNumberHint.style.display = 'block';
+    ____(gPickCount, n);
+    ____(gPickMult, '×' + getPickMultiplier(n));
+  }
+
+  function openGamble(winAmount) {
+    if (gambleActive || winAmount <= 0) return;
+    if (isMegaWinShowing) { setStatus('Complete Mega Win first!', false); return; }
+    gambleActive = true; gambleWin = winAmount; gambleAttempts = 0; gambleBetType = null; gambleNumbers = []; gambleDiceResult = null; gambleOriginalBet = winAmount;
+    balance -= winAmount; updateHUD();
+    ____(gWinAmount, fmt(winAmount)); ____(gAttempts, '0'); ____(gResult, ''); ____(gDice, '🎲');
+    gDice.className = 'g-dice'; gSpinBtn.disabled = false; gTakeBtn.disabled = false;
+    gOpts.forEach(function(btn){ btn.classList.remove('g-selected'); });
+    document.querySelectorAll('#gNumberPick button').forEach(function(btn){ btn.classList.remove('g-num-selected'); });
+    gNumberPick.style.display = 'none';
+    if (gNumberHint) gNumberHint.style.display = 'none';
+    updateGambleStatsDisplay();
+    stopGambleTimer();
+    gambleOverlay.classList.add('active');
+    setStatus('🎲 Gamble: Choose your bet!', false);
+  }
+  function closeGamble(takeWin) {
+    if (!gambleActive) return;
+    if (takeWin && gambleWin > 0) {
+      var netWin = gambleWin - gambleOriginalBet;
+      balance += gambleWin; gambleTotalWin += netWin;
+      setStatus('💰 YOU WIN! +' + fmt(gambleWin), false);
+    } else if (!takeWin && gambleWin > 0) { balance += gambleWin; setStatus('YOU WIN! +' + fmt(gambleWin), false); }
+    else setStatus('❌ YOU LOSE!', false);
+    gambleActive = false; gambleOverlay.classList.remove('active');
+    resetGambleBtn();
+    pendingGambleWin = 0; updateHUD(); saveGame();
+  }
+  function selectGambleBet(type, event) {
+    if (!gambleActive || gambleDiceResult !== null) return;
+    gOpts.forEach(function(btn){ btn.classList.remove('g-selected'); });
+    document.querySelectorAll('#gNumberPick button').forEach(function(btn){ btn.classList.remove('g-num-selected'); });
+    gambleBetType = type; gNumberPick.style.display = 'none';
+    if (gNumberHint) gNumberHint.style.display = 'none';
+    gambleNumbers = [];
+
+    if (type === 'number') {
+      gNumberPick.style.display = 'flex';
+      if (event && event.currentTarget) event.currentTarget.classList.add('g-selected');
+      setStatus('🎯 Pick 1 to 6 numbers (1→×6, 2→×3, 3→×2, 4→×1.5, 5→×1.2, 6→×1)!', false);
+    } else {
+      var labels = { small:'SMALL (1,2,3)', big:'BIG (4,5,6)', even:'EVEN (2,4,6)', odd:'ODD (1,3,5)' };
+      setStatus('Bet: ' + labels[type] + ' - Click SPIN DICE!', false);
+      if (event && event.currentTarget) event.currentTarget.classList.add('g-selected');
+    }
+  }
+  function toggleGambleNumber(num) {
+    if (!gambleActive || gambleDiceResult !== null) return;
+    if (gambleBetType !== 'number') {
+      gambleBetType = 'number';
+      gOpts.forEach(function(btn){ btn.classList.remove('g-selected'); });
+    }
+    var idx = gambleNumbers.indexOf(num);
+    if (idx >= 0) { gambleNumbers.splice(idx, 1); } else { gambleNumbers.push(num); gambleNumbers.sort(function(a,b){ return a-b; }); }
+    document.querySelectorAll('#gNumberPick button').forEach(function(btn){
+      var n = parseInt(btn.textContent);
+      if (gambleNumbers.indexOf(n) >= 0) btn.classList.add('g-num-selected');
+      else btn.classList.remove('g-num-selected');
+    });
+    updatePickHint();
+    var n = gambleNumbers.length;
+    if (n === 0) setStatus('🎯 Pick at least 1 number!', false);
+    else setStatus('🎯 ' + n + ' number(s): [' + gambleNumbers.join(', ') + '] → ×' + getPickMultiplier(n) + '  |  Click SPIN DICE!', false);
+  }
+  function spinDice() {
+    if (!gambleActive || gambleDiceResult !== null) return;
+    if (gambleBetType === 'number' && gambleNumbers.length === 0) { setStatus('Pick at least 1 number first!', false); return; }
+    if (!gambleBetType) { setStatus('Choose a bet first!', false); return; }
+    gSpinBtn.disabled = true; gTakeBtn.disabled = true; ____(gResult, ''); gDice.className = 'g-dice rolling';
+    playDiceRattle();
+    var result = secureRandomInt(1, 7);
+    setTimeout(function(){
+      gDice.className = 'g-dice'; ____(gDice, diceEmojis[result - 1]);
+      gambleDiceResult = result; var win = false; var multiplier = 1;
+      switch(gambleBetType) {
+        case 'small': win = (result >= 1 && result <= 3); multiplier = 2; break;
+        case 'big': win = (result >= 4 && result <= 6); multiplier = 2; break;
+        case 'even': win = (result % 2 === 0); multiplier = 2; break;
+        case 'odd': win = (result % 2 === 1); multiplier = 2; break;
+        case 'number':
+          win = (gambleNumbers.indexOf(result) >= 0);
+          multiplier = getPickMultiplier(gambleNumbers.length);
+          break;
+      }
+      if (win) {
+        gambleWin *= multiplier; ____(gWinAmount, fmt(gambleWin));
+        var winText = '✅ YOU WIN! +' + fmt(gambleWin);
+        if (gambleBetType === 'number') winText += '  (×' + multiplier + ')';
+        ____(gResult, winText);
+        gResult.className = 'g-result win'; gDice.classList.add('win'); gambleAttempts++; ____(gAttempts, gambleAttempts);
+        gambleSessions++; updateGambleStatsDisplay();
+        playWinTier(Math.min(getWinTier(gambleWin / bet), 3));
+        gSpinBtn.disabled = false; gTakeBtn.disabled = false;
+        gambleDiceResult = null; gambleBetType = null; gambleNumbers = [];
+        gOpts.forEach(function(btn){ btn.classList.remove('g-selected'); });
+        document.querySelectorAll('#gNumberPick button').forEach(function(btn){ btn.classList.remove('g-num-selected'); });
+        gNumberPick.style.display = 'none';
+        if (gNumberHint) gNumberHint.style.display = 'none';
+        setStatus('✅ YOU WIN! +' + fmt(gambleWin), false);
+        setTimeout(function(){ ____(gDice, '🎲'); gDice.classList.remove('win'); }, 800);
+      } else {
+        var lostAmount = gambleOriginalBet; gambleWin = 0;
+        ____(gWinAmount, fmt(0)); ____(gResult, '❌ YOU LOSE! -' + fmt(lostAmount));
+        gResult.className = 'g-result lose'; gDice.classList.add('lose'); gSpinBtn.disabled = true; gTakeBtn.disabled = true;
+        gambleTotalLoss += lostAmount; gambleSessions++; updateGambleStatsDisplay();
+        playNoise(0.3, 0.15, 0, 'lowpass', 400, 2);
+        [200, 180, 160].forEach(function(f, i){ playTone(f, 0.15, 'square', 0.05, i * 0.12, 600); });
+        setStatus('❌ YOU LOSE! -' + fmt(lostAmount), false);
+        resetGambleBtn();
+        pendingGambleWin = 0;
+        setTimeout(function(){ closeGamble(false); }, 1500);
+      }
+      updateHUD();
+    }, 800);
+  }
+
+  function shakeAndGlow(){ var c = document.querySelector('.container'); c.classList.add('q-shake','q-glow'); setTimeout(function(){ c.classList.remove('q-shake','q-glow'); }, 1100); }
+  function bigWinAnimation(){ var c = document.querySelector('.container'); c.classList.add('q-bigwin'); setTimeout(function(){ c.classList.remove('q-bigwin'); }, 1200); }
+
+  var isSpinning = false, isAuto = false, autoId = 0;
+
+  // ============================================================
+  // DO SPIN
+  // ============================================================
+  async function doSpin(){
+    if(isSpinning) return;
+    if(isMegaWinShowing) { setStatus('⚠️ Complete Mega Win first!', false); return; }
+    if(typeof bet !== 'number' || isNaN(bet) || bet <= 0) { setStatus('⚠️ Invalid bet!', false); return; }
+    if(balance < bet){ setStatus('Not enough credits.', false); return; }
+    isSpinning = true; spinBtn.disabled = true;
+    if(!isAuto) autoBtn.disabled = true;
+    pendingGambleWin = 0; resetGambleBtn();
+    try{
+      initAudio();
+      balance -= bet; spinCount++;
+      sessionTotalBet += bet;
+      updateHUD();
+      var matrix = getMatrix(); setStatus('Spinning...', false);
+      await animateReels(matrix);
+
+      // ============ TOP-2 SUM EVALUATION ============
+      var counts = {};
+      SYM.forEach(function(s){ counts[s] = 0; });
+      for(var r=0; r<4; r++){
+        for(var c=0; c<5; c++){
+          counts[matrix[r][c]] = (counts[matrix[r][c]] || 0) + 1;
+        }
+      }
+      // Sort symbols by count descending
+      var sortedSyms = SYM.slice().sort(function(a,b){ return counts[b] - counts[a]; });
+      var top1 = sortedSyms[0];
+      var top2 = sortedSyms[1];
+      var top1Count = counts[top1];
+      var top2Count = counts[top2];
+      var top2Sum = top1Count + top2Count;
+
+      var spinWin = 0;
+      var payout = PAYTABLE[top2Sum] || 0;
+      if (payout > 0) {
+        spinWin = payout * bet;
+      }
+
+      if(typeof spinWin !== 'number' || isNaN(spinWin)) spinWin = 0;
+
+      if(spinWin > 0){ balance += spinWin; sessionTotalWon += spinWin; }
+
+      var didWin = spinWin > 0;
+      if(didWin){
+        var mult = spinWin / bet;
+        var tier = getWinTier(mult);
+        var holdMs = TIER_HOLD[tier];
+        var isMega = tier >= 3;
+
+        if(tier >= 3) shakeAndGlow();
+        if(tier >= 4) bigWinAnimation();
+        playWinTier(tier);
+        burstEffect(tier);
+        showWinDisplay([top1, top2], [top1Count, top2Count], top2Sum, spinWin, holdMs, tier);
+
+        if(isMega) isMegaWinShowing = true;
+        await new Promise(function(r){ setTimeout(r, holdMs); });
+        isMegaWinShowing = false;
+
+        setStatus(top1 + ' × ' + top1Count + ' + ' + top2 + ' × ' + top2Count + ' = ' + top2Sum + '  →  WIN +' + fmt(spinWin), false);
+
+        // GAMBLE becomes available once the win display has hidden
+        armGambleBtn(spinWin);
+        if(isAuto){
+          await gambleWindow(GAMBLE_WINDOW_MS);          // 2.5s to press GAMBLE before AUTO continues
+          if(!gambleActive && isAuto){ pendingGambleWin = 0; resetGambleBtn(); }
+          else stopGambleTimer();
+        }
+      } else {
+        setStatus(top1 + ' × ' + top1Count + ' + ' + top2 + ' × ' + top2Count + ' = ' + top2Sum + '  →  No win', false);
+        winDisplay.classList.remove('active');
+        lossStreak++;
+        if(lossStreak >= 4 && secureRandom() < 0.3){ playAmbientStinger(); lossStreak = 0; }
+        pendingGambleWin = 0; resetGambleBtn();
+      }
+
+      if(spinCount >= 100){ spinCount = 0; cycleCount++; updateHUD(); }
+      updateHUD(); saveGame();
+      if(!didWin) await new Promise(function(r){ setTimeout(r, 600); });
+    } finally {
+      isSpinning = false; spinBtn.disabled = false;
+      if(!isAuto) autoBtn.disabled = false;
+    }
+  }
+
+  async function animateReels(matrix){
+    var promises = [];
+    for(var c=0;c<5;c++){
+      var colSymbols = [];
+      for(var r=0;r<4;r++) colSymbols.push(matrix[r][c]);
+      promises.push(animateReel(c, colSymbols, c * 150));
+    }
+    await Promise.all(promises);
+  }
+  function animateReel(index, symbols, delay){
+    return new Promise(function(resolve){
+      var strip = strips[index]; var fullStrip = [];
+      for(var i=0;i<28;i++) fullStrip.push(randomSymbolFromReel(index));
+      symbols.forEach(function(s){ fullStrip.push(s); });
+      strip.style.transition = 'none'; strip.style.transform = 'translateY(0)'; _____(strip, '');
+      fullStrip.forEach(function(sym){ var cell = $$('div'); cell.className = 'cell dim'; ____(cell, sym); ___(strip, cell); });
+      var offset = (fullStrip.length - 4) * 75;
+      var duration = 1100 + delay;
+      setTimeout(function(){
+        requestAnimationFrame(function(){ strip.style.transition = 'transform ' + duration + 'ms cubic-bezier(.18,.85,.32,1)'; strip.style.transform = 'translateY(-' + offset + 'px)'; });
+        setTimeout(function(){ strip.style.transition = 'none'; }, duration + 40);
+        setTimeout(function(){ renderReel(index, symbols); playReelStopSound(index); resolve(); }, duration + 60);
+      }, delay);
+    });
+  }
+
+  // ============================================================
+  // EVENT LISTENERS
+  // ============================================================
+  gambleBtn.addEventListener('click', function(){ if (pendingGambleWin > 0 && !gambleActive) openGamble(pendingGambleWin); else if (pendingGambleWin <= 0) setStatus('⚠️ No win to gamble!', false); });
+  gOpts.forEach(function(btn){ btn.addEventListener('click', function(e){ selectGambleBet(this.getAttribute('data-bet'), e); }); });
+  document.querySelectorAll('#gNumberPick button').forEach(function(btn){ btn.addEventListener('click', function(){ toggleGambleNumber(parseInt(this.textContent)); }); });
+  gSpinBtn.addEventListener('click', spinDice);
+  gTakeBtn.addEventListener('click', function(){ if (gambleActive && gambleWin > 0) closeGamble(true); else if (gambleActive) closeGamble(false); });
+
+  spinBtn.addEventListener('click', function(){
+    if(isAuto) return;
+    if(isMegaWinShowing) { setStatus('⚠️ Complete Mega Win first!', false); return; }
+    if (gambleActive) { setStatus('⚠️ Complete Gamble first!', false); return; }
+    doSpin();
+  });
+
+  autoBtn.addEventListener('click', function(){
+    if(isAuto) return;
+    if (gambleActive) { setStatus('⚠️ Complete Gamble first!', false); return; }
+    playUIClick(); autoId++;
+    var currentId = autoId;
+    isAuto = true; autoBtn.disabled = true; spinBtn.disabled = true; stopBtn.disabled = false;
+    setAutoAmbience(true);
+    (async function(){
+      while(isAuto && currentId === autoId){
+        if(isMegaWinShowing){ await new Promise(function(r){ setTimeout(r, 500); }); continue; }
+        if (gambleActive){ await new Promise(function(r){ setTimeout(r, 500); }); continue; }
+        if(balance < bet){ setStatus('Out of credits.', false); break; }
+        await doSpin();
+        await new Promise(function(r){ setTimeout(r, 300); });
+      }
+      autoBtn.disabled = false; spinBtn.disabled = false; stopBtn.disabled = true;
+      isAuto = false; setAutoAmbience(false);
+    })();
+  });
+
+  stopBtn.addEventListener('click', function(){
+    playUIClick(); isAuto = false; autoId++; stopGambleTimer();
+    autoBtn.disabled = false; spinBtn.disabled = false; stopBtn.disabled = true;
+    setStatus('Auto stopped.', false); setAutoAmbience(false);
+  });
+
+  muteBtn.addEventListener('click', function(){
+    soundEnabled = !soundEnabled;
+    ____(muteBtn, soundEnabled ? '🔊 Sound' : '🔇 Sound');
+    if(soundEnabled) playUIClick();
+    if(bgGain && audioCtx){
+      var now = audioCtx.currentTime; bgGain.gain.cancelScheduledValues(now); bgGain.gain.setValueAtTime(bgGain.gain.value, now);
+      bgGain.gain.linearRampToValueAtTime(soundEnabled ? bgBaseLevel : 0, now + 0.2);
+    }
+  });
+
+  saveBtn.addEventListener('click', function(){ playUIClick(); saveGame(); setStatus('💾 Game saved!', false); setTimeout(function(){ setStatus('Ready.', false); }, 800); });
+  expBtn.addEventListener('click', function(){ playUIClick(); exportGame(); });
+  impBtn.addEventListener('click', function(){ playUIClick(); impFile.click(); });
+  impFile.addEventListener('change', function(e){
+    if(e.target.files && e.target.files[0]){
+      importGame(e.target.files[0]);
+      e.target.value = '';
+    }
+  });
+
+  window.addEventListener('beforeunload', function() { saveGame(); });
+  window.addEventListener('pagehide', function() { saveGame(); });
+
+  var betOptions = [0.4, 1, 2, 4, 10, 20, 40, 100, 250, 500, 1000];
+  betOptions.forEach(function(val){
+    var btn = $$('button'); ____(btn, val);
+    if(val === bet) btn.classList.add('active');
+    btn.addEventListener('click', function(){
+      if(isMegaWinShowing) { setStatus('⚠️ Complete Mega Win first!', false); return; }
+      if (gambleActive) { setStatus('⚠️ Complete Gamble first!', false); return; }
+      playUIClick();
+      var btns = _('#br button');
+      for(var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+      btn.classList.add('active'); bet = val; updateHUD(); saveGame();
+    });
+    ___(betRow, btn);
+  });
+
+  resetReels();
+  var loaded = loadGame();
+  if (!loaded) { updateHUD(); setStatus('Welcome. Press SPIN to start.', false); }
+  spinBtn.classList.add('q-pulse');
+  gambleBtn.disabled = true;
+
+  (function(){
+    var canvas = $('qbg'); var ctx = canvas.getContext('2d');
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    var particles = [];
+    for(var i=0;i<36;i++){
+      particles.push({x: secureRandom() * window.innerWidth, y: secureRandom() * window.innerHeight, r: 0.6 + secureRandom() * 1.8, s: 0.12 + secureRandom() * 0.3, o: 0.12 + secureRandom() * 0.32, g: secureRandom() < 0.25});
+    }
+    (function animateParticles(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(function(p){
+        p.y -= p.s; if(p.y < -5){ p.y = canvas.height + 5; p.x = secureRandom() * canvas.width; }
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+        ctx.fillStyle = p.g ? 'rgba(251,191,36,' + p.o + ')' : 'rgba(192,132,224,' + p.o + ')';
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    })();
+  })();
+
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+})();
+</script>
+</body>
+</html>
